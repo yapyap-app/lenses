@@ -6,7 +6,7 @@
     "author": { "name": "yapyap", "url": "https://github.com/yapyap-app/yapyap" },
     "tags": ["meetings", "summary", "overview"],
     "screenshots": [],
-    "license": "MIT",
+    "license": "GPL-3.0-or-later",
     "minAppVersion": "0.1.0"
   },
   "lens": {

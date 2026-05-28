@@ -54,5 +54,6 @@ hosts. Installed Lenses thread their identity through
 
 ## License
 
-MIT — see [`LICENSE`](./LICENSE). Each Lens may declare its own license in
-`listing.license`; the default for everything in this repo is MIT.
+GPL-3.0-or-later — see [`LICENSE`](./LICENSE). Each Lens may declare its own
+license in `listing.license`; the default for everything in this repo is
+GPL-3.0-or-later.

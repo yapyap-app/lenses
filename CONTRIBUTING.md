@@ -17,7 +17,7 @@ than the community marketplace.
        "author": { "name": "Acme", "url": "https://acme.dev" },
        "tags": ["meetings", "decisions"],
        "screenshots": ["screenshots/1.png"],
-       "license": "MIT",
+       "license": "GPL-3.0-or-later",
        "minAppVersion": "0.5.0"
      },
      "lens": {
