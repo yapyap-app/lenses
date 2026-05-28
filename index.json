@@ -1,0 +1,29 @@
+{
+  "lenses": [
+    {
+      "description": "Extracts action items committed to in a meeting Transcript.",
+      "hash": "sha256-281855cb9366eed43b82ccf22b9e53627d7b5b46c2822cc0fef9287fe73e852b",
+      "name": "Actions",
+      "path": "actions",
+      "updatedAt": "2026-05-28T15:12:20.585Z",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Extracts Decisions committed to in a meeting Transcript.",
+      "hash": "sha256-0fab0466fe779b2b0ddf7e87317c2fa97a41af879b7bac311fc9850fd459c225",
+      "name": "Decisions",
+      "path": "decisions",
+      "updatedAt": "2026-05-28T15:12:36.851Z",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Structured headline + framing + body summary of a recorded conversation.",
+      "hash": "sha256-ec397037e00056faa4b4d603fb30211605f499fbaa314b168a43820511f5e957",
+      "name": "Summary",
+      "path": "summary",
+      "updatedAt": "2026-05-28T15:12:53.190Z",
+      "version": "0.1.0"
+    }
+  ],
+  "registryId": "yapyap.official"
+}
