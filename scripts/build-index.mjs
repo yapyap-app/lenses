@@ -29,7 +29,7 @@ function canonicalise(value) {
 
 function sha256Canonical(obj) {
   const bytes = JSON.stringify(canonicalise(obj));
-  return "sha256-" + createHash("sha256").update(bytes).digest("hex");
+  return "sha256:" + createHash("sha256").update(bytes).digest("hex");
 }
 
 async function listLensDirs() {
