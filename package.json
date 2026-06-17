@@ -2,14 +2,22 @@
   "name": "@yapyap/lenses-official",
   "version": "0.1.0",
   "private": true,
-  "description": "The official Lens Registry for yapyap — static files, no deps.",
+  "type": "module",
+  "description": "The official Lens Registry for yapyap — TypeScript-authored lenses compiled to a static lens.json / index.json registry via @yapyap/lens.",
   "license": "GPL-3.0-or-later",
   "repository": {
     "type": "git",
     "url": "https://github.com/yapyap-app/lenses"
   },
   "scripts": {
-    "build-index": "node scripts/build-index.mjs",
-    "verify": "node scripts/build-index.mjs --check"
+    "build": "bun scripts/build.ts",
+    "verify": "bun scripts/build.ts --check",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "@yapyap/config": "workspace:*",
+    "@yapyap/lens": "workspace:*",
+    "typescript": "^5"
   }
 }
