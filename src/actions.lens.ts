@@ -17,7 +17,6 @@ export const actions = defineLens({
   },
   lens: {
     version: "0.1.0",
-    shape: { kind: "cited-list" },
     inputs: ["transcript"],
     systemPrompt,
     schema: z.object({

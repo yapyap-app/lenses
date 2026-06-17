@@ -18,7 +18,6 @@ export const summary = defineLens({
   },
   lens: {
     version: "0.1.0",
-    shape: { kind: "summary" },
     inputs: ["transcript"],
     systemPrompt,
     schema: z.object({
