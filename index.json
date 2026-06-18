@@ -2,26 +2,26 @@
   "lenses": [
     {
       "description": "Extracts action items committed to in a meeting Transcript.",
-      "hash": "sha256:8be15dba3ebbd048fafb4c3577fbe7a1d8b66b16b31955a48e88da1032e82ab8",
+      "hash": "sha256:bd635986b3dccc155c288523a58e187de533164344259ac866cb0edd6c449266",
       "name": "Actions",
       "path": "actions",
-      "updatedAt": "2026-06-17T00:00:00.000Z",
+      "updatedAt": "2026-06-18T00:00:00.000Z",
       "version": "0.1.0"
     },
     {
       "description": "Extracts Decisions committed to in a meeting Transcript.",
-      "hash": "sha256:8d34d89d6b501cd5d901ec5f0a8eb48fbb7d033ff68cf05fcfb9546175bc9f55",
+      "hash": "sha256:f0627ea9a59589151e5b9afbcf695839d1f08d7d8f42b23e0a0f9f0fb5cccaf5",
       "name": "Decisions",
       "path": "decisions",
-      "updatedAt": "2026-06-17T00:00:00.000Z",
+      "updatedAt": "2026-06-18T00:00:00.000Z",
       "version": "0.1.0"
     },
     {
       "description": "Structured headline + framing + body summary of a recorded conversation.",
-      "hash": "sha256:bf27274876139dda88c819a195587ba409919854589516c7e1608f20cdf5980b",
+      "hash": "sha256:9afb05f00dd6aa577b8c92472e76ebff25d77b9d4421f67ea844766d373444c9",
       "name": "Summary",
       "path": "summary",
-      "updatedAt": "2026-06-17T00:00:00.000Z",
+      "updatedAt": "2026-06-18T00:00:00.000Z",
       "version": "0.1.0"
     }
   ],
