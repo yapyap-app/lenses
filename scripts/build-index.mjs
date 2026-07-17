@@ -42,6 +42,38 @@ var SCHEMA_FIELD_TYPES = [
   "object"
 ];
 var SCHEMA_FIELD_TYPE_SET = new Set(SCHEMA_FIELD_TYPES);
+function isViewSpecElement(value) {
+  if (value === null || typeof value !== "object")
+    return false;
+  const v = value;
+  if (typeof v.type !== "string" || v.type.length === 0)
+    return false;
+  if (v.props !== undefined && (v.props === null || typeof v.props !== "object"))
+    return false;
+  if (v.children !== undefined) {
+    if (!Array.isArray(v.children))
+      return false;
+    if (!v.children.every((c) => typeof c === "string"))
+      return false;
+  }
+  return true;
+}
+function isViewSpec(v) {
+  if (v === null || typeof v !== "object")
+    return false;
+  const obj = v;
+  if (typeof obj.root !== "string" || obj.root.length === 0)
+    return false;
+  if (obj.elements === null || typeof obj.elements !== "object" || Array.isArray(obj.elements)) {
+    return false;
+  }
+  const elements = obj.elements;
+  for (const key of Object.keys(elements)) {
+    if (!isViewSpecElement(elements[key]))
+      return false;
+  }
+  return obj.root in elements;
+}
 // src/types.ts
 var VALID_ORIGINS = new Set([
   "builtin",
@@ -15024,11 +15056,10 @@ function isHttpsUrl(value) {
   }
 }
 function vetValue(key, value, path) {
+  const isUrlKey = key !== null && URL_PROP_KEYS.has(key.toLowerCase());
   if (typeof value === "string") {
-    if (key !== null && URL_PROP_KEYS.has(key.toLowerCase())) {
-      if (!isHttpsUrl(value)) {
-        return `${path} is not an https URL (${value.slice(0, 80)})`;
-      }
+    if (isUrlKey && !isHttpsUrl(value)) {
+      return `${path} is not an https URL (${value.slice(0, 80)})`;
     }
     return null;
   }
@@ -15041,6 +15072,9 @@ function vetValue(key, value, path) {
     return null;
   }
   if (value !== null && typeof value === "object") {
+    if (isUrlKey) {
+      return `${path} must be a static https string — bindings are not allowed on URL props`;
+    }
     for (const [k, v] of Object.entries(value)) {
       const reason = vetValue(k, v, `${path}.${k}`);
       if (reason !== null)
@@ -15180,6 +15214,13 @@ async function buildRegistryIndexFromFiles(registryId, files) {
     }
     const { view } = parsed.data.lens;
     if (view !== null && view !== undefined) {
+      if (!isViewSpec(view)) {
+        issues.push({
+          path: file2.path,
+          message: "view is not a structurally valid Spec"
+        });
+        continue;
+      }
       if (!isAcceptedByCatalog(view)) {
         issues.push({ path: file2.path, message: "view rejected by the catalog" });
         continue;
