@@ -5,6 +5,10 @@ a place to publish lenses you made so others can install them. No server
 needed — GitHub hosts the files, and a built-in workflow keeps the
 catalogue up to date for you.
 
+Full guide — including sending a lens as a single file and how updates
+reach your subscribers — in the official docs:
+[docs.yap-yap.app/docs/lenses/publishing](https://docs.yap-yap.app/docs/lenses/publishing).
+
 ## Set it up (once, ~2 minutes)
 
 1. Click **Use this template → Create a new repository** (top right on
