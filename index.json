@@ -1,0 +1,13 @@
+{
+  "lenses": [
+    {
+      "description": "An example lens that pulls the three most notable moments out of a recording. Delete this folder once you publish your own lens.",
+      "hash": "sha256:b5fb2ff76a79c0be33798a37b088fad782015d01ad691755693294eab0bad4e3",
+      "name": "Example: Highlights",
+      "path": "example-highlights",
+      "updatedAt": "2026-07-17T13:35:09+02:00",
+      "version": "1.0.0"
+    }
+  ],
+  "registryId": "change-me.lenses"
+}
