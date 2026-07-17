@@ -1,0 +1,45 @@
+name: Build registry index
+
+# Rebuilds index.json whenever a lens changes. On pull requests it only
+# validates (so a broken lens.json can never merge); on push to the
+# default branch it commits the regenerated catalogue back.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lenses/**"
+      - "registry.config.json"
+      - "scripts/**"
+  pull_request:
+    paths:
+      - "lenses/**"
+      - "registry.config.json"
+      - "scripts/**"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: entry timestamps come from each file's last
+          # commit, and a shallow clone would stamp everything with HEAD.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate lenses and build index.json
+        run: node scripts/build-index.mjs
+      - name: Commit updated index.json
+        if: github.event_name == 'push'
+        run: |
+          if ! git diff --quiet index.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add index.json
+            git commit -m "chore: rebuild index.json"
+            git push
+          fi
