@@ -1,45 +1,27 @@
-# yapyap official lenses
+# The official yapyap Lens Registry
 
-The official Lens Registry for [yapyap](https://github.com/yapyap-app/yapyap) — the
-trusted source of Lenses every install starts with, and the canonical reference
-implementation of the [Lens Registry Contract](https://github.com/yapyap-app/yapyap/blob/main/docs/architecture/lens-registry-contract.md).
+The lenses that ship with [yapyap](https://yap-yap.app) — Actions,
+Decisions, Summary — and the registry the app's marketplace reads them
+from, over plain HTTP from
+`https://raw.githubusercontent.com/yapyap-app/lenses/main/`. No auth, no
+token, no API — just static files.
 
-This registry is read by the yapyap app over plain HTTP from
-`https://raw.githubusercontent.com/yapyap-app/lenses/main/`. No auth, no token,
-no API — just static files behind a CDN.
+Every lens is a `lenses/<name>/lens.json` file; `index.json` is the
+catalogue, rebuilt automatically by CI whenever a lens changes. This
+repository is a fork of
+[registry-template](https://github.com/yapyap-app/registry-template) and
+works exactly like any registry made from it — the official registry gets
+no special treatment beyond its verified badge in the app.
 
-## What's in here
+## Propose a lens
 
-```
-.
-├── index.json            # the catalogue — name + description per Lens
-└── lenses/
-    ├── actions/lens.json    # extract action items from a meeting Transcript
-    ├── decisions/lens.json  # extract Decisions committed to in a Transcript
-    └── summary/lens.json    # structured headline + framing + body summary
-```
-
-Each `lens.json` follows `formatVersion: 1` of the registry envelope:
-
-```jsonc
-{
-  "formatVersion": 1,
-  "listing": { "name", "description", "author", "tags", "license", "minAppVersion" },
-  "lens":    { "version", "kind", "systemPrompt", "schema", "shape", "view", "inputRefs" }
-}
-```
-
-`listing` is distribution metadata. `lens` is the runnable definition. The
-canonical version is `lens.version`; `index.json` carries a copy alongside the
-sha256 of the canonical (sorted-keys) `lens.json` bytes.
-
-## Contributing
-
-Open a PR. The Official badge on the yapyap Marketplace is `registryId`-match
-only — Lenses live here because they pass review, not because the repo claims
-the badge.
-
-See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full process.
+Open a pull request adding your lens at `lenses/<your-lens-name>/lens.json`
+(export it from yapyap via **Publish → Download**). CI validates it against
+the same rules the app enforces on install; nothing invalid can merge. See
+the [publishing guide](https://docs.yap-yap.app/docs/lenses/publishing) —
+or run your own registry from the
+[template](https://github.com/yapyap-app/registry-template) instead, and
+users can subscribe to it directly.
 
 ## Identity
 
@@ -48,20 +30,14 @@ registryId:  yapyap.official
 base URL:    https://raw.githubusercontent.com/yapyap-app/lenses/main/
 ```
 
-The `registryId` is the stable namespace — it survives if this repo ever moves
-hosts. Installed Lenses thread their identity through
-`<registryId>/<listing-path>`, content-hashed per version.
+The `registryId` is the stable namespace — it survives if this repo ever
+moves hosts. Installed lenses thread their identity through
+`<registryId>/<listing-path>`, content-hashed per version. The Official
+badge in the app is bound to the base URL the app fetches from — a copy of
+this repo cannot claim it.
 
 ## License
 
-GPL-3.0-or-later — see [`LICENSE`](./LICENSE). Each Lens may declare its own
-license in `listing.license`; the default for everything in this repo is
-GPL-3.0-or-later.
-
-## Built on the registry template
-
-This repository is a fork of
-[`yapyap-app/registry-template`](https://github.com/yapyap-app/registry-template)
-— the base anyone can use to run their own lens registry. Improvements to
-the shared tooling (index builder, CI workflow) land in the template first
-and are merged here automatically.
+GPL-3.0-or-later for the lenses in this repository — see
+[`LICENSE`](./LICENSE). Each lens also declares its own license in
+`listing.license`.
