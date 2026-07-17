@@ -15227,7 +15227,7 @@ function findLensFiles(dir, out = []) {
 }
 function gitUpdatedAt(root, file2) {
   try {
-    const out = execFileSync("git", ["log", "-1", "--format=%cI", "--", file2], { cwd: root, encoding: "utf8" }).trim();
+    const out = execFileSync("git", ["log", "-1", "--format=%cI", "--", file2], { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
     return out.length > 0 ? out : null;
   } catch {
     return null;
@@ -15251,12 +15251,15 @@ async function main() {
     fail("missing registry.config.json at the registry root");
   }
   const indexPath = join(root, "index.json");
-  const existingUpdatedAt = new Map;
+  const existingEntries = new Map;
   try {
     const existing = JSON.parse(readFileSync(indexPath, "utf8"));
     for (const entry of existing.lenses ?? []) {
-      if (typeof entry.path === "string" && typeof entry.updatedAt === "string") {
-        existingUpdatedAt.set(entry.path, entry.updatedAt);
+      if (typeof entry.path === "string" && typeof entry.updatedAt === "string" && typeof entry.hash === "string") {
+        existingEntries.set(entry.path, {
+          updatedAt: entry.updatedAt,
+          hash: entry.hash
+        });
       }
     }
   } catch {}
@@ -15271,7 +15274,9 @@ async function main() {
       parseErrors.push(`${path}: lens.json is not valid JSON`);
       continue;
     }
-    const updatedAt = gitUpdatedAt(root, file2) ?? existingUpdatedAt.get(path) ?? new Date().toISOString();
+    const existing = existingEntries.get(path);
+    const unchanged = existing !== undefined && existing.hash === await hashCanonicalLens(value);
+    const updatedAt = unchanged ? existing.updatedAt : gitUpdatedAt(root, file2) ?? new Date().toISOString();
     files.push({ path, updatedAt, value });
   }
   if (parseErrors.length > 0) {
