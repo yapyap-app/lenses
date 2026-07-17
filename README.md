@@ -1,54 +1,67 @@
-# Your yapyap Lens Registry
+# yapyap official lenses
 
-This repository is a lens registry for [yapyap](https://yap-yap.app):
-a place to publish lenses you made so others can install them. No server
-needed — GitHub hosts the files, and a built-in workflow keeps the
-catalogue up to date for you.
+The official Lens Registry for [yapyap](https://github.com/yapyap-app/yapyap) — the
+trusted source of Lenses every install starts with, and the canonical reference
+implementation of the [Lens Registry Contract](https://github.com/yapyap-app/yapyap/blob/main/docs/architecture/lens-registry-contract.md).
 
-Full guide — including sending a lens as a single file and how updates
-reach your subscribers — in the official docs:
-[docs.yap-yap.app/docs/lenses/publishing](https://docs.yap-yap.app/docs/lenses/publishing).
+This registry is read by the yapyap app over plain HTTP from
+`https://raw.githubusercontent.com/yapyap-app/lenses/main/`. No auth, no token,
+no API — just static files behind a CDN.
 
-## Set it up (once, ~2 minutes)
+## What's in here
 
-1. Click **Use this template → Create a new repository** (top right on
-   GitHub). Give it any name, keep it **public**.
-2. In your new repository, open `registry.config.json`, click the pencil
-   to edit, and change the `registryId` to something that is yours, e.g.
-   `"jane.lenses"`. Commit the change.
-3. Done. Your registry lives at `https://github.com/<you>/<repo>`.
+```
+.
+├── index.json            # the catalogue — name + description per Lens
+└── lenses/
+    ├── actions/lens.json    # extract action items from a meeting Transcript
+    ├── decisions/lens.json  # extract Decisions committed to in a Transcript
+    └── summary/lens.json    # structured headline + framing + body summary
+```
 
-## Publish a lens
+Each `lens.json` follows `formatVersion: 1` of the registry envelope:
 
-1. In yapyap, open your lens and choose **Publish** — it gives you a
-   `lens.json` file.
-2. In this repository, use **Add file → Upload files** (or **Create new
-   file** and paste) to put it at `lenses/<your-lens-name>/lens.json` —
-   for example `lenses/standup-summary/lens.json`.
-3. Commit. Within a minute the **Build registry index** workflow checks
-   your lens and updates the catalogue (`index.json`) automatically. If
-   the file has a problem, the workflow fails with a message telling you
-   what to fix — nothing broken is ever published.
+```jsonc
+{
+  "formatVersion": 1,
+  "listing": { "name", "description", "author", "tags", "license", "minAppVersion" },
+  "lens":    { "version", "kind", "systemPrompt", "schema", "shape", "view", "inputRefs" }
+}
+```
 
-To update a lens later, upload the new `lens.json` over the old one and
-bump the `version` inside it — yapyap shows your subscribers what changed
-before they accept the update.
+`listing` is distribution metadata. `lens` is the runnable definition. The
+canonical version is `lens.version`; `index.json` carries a copy alongside the
+sha256 of the canonical (sorted-keys) `lens.json` bytes.
 
-The example lens in `lenses/example-highlights/` is safe to delete
-whenever you like.
+## Contributing
 
-## Let people install your lenses
+Open a PR. The Official badge on the yapyap Marketplace is `registryId`-match
+only — Lenses live here because they pass review, not because the repo claims
+the badge.
 
-Tell them to open yapyap → **Lenses → Add registry** and paste your
-repository URL — or just `<you>/<repo>`. They'll see your whole
-catalogue and get notified when you ship updates.
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full process.
 
-## How it works (for the curious)
+## Identity
 
-A registry is only static files: `index.json` (the catalogue, with a
-content hash per lens) and `lenses/<name>/lens.json` (the lens itself).
-The workflow in `.github/workflows/build-index.yml` runs
-`scripts/build-index.mjs`, which validates every lens against the same
-rules yapyap enforces on install, then rewrites the catalogue. Nothing in
-a lens is executable — a lens is a prompt, a schema, and a layout — and
-yapyap re-verifies everything again on every install.
+```
+registryId:  yapyap.official
+base URL:    https://raw.githubusercontent.com/yapyap-app/lenses/main/
+```
+
+The `registryId` is the stable namespace — it survives if this repo ever moves
+hosts. Installed Lenses thread their identity through
+`<registryId>/<listing-path>`, content-hashed per version.
+
+## License
+
+GPL-3.0-or-later — see [`LICENSE`](./LICENSE). Each Lens may declare its own
+license in `listing.license`; the default for everything in this repo is
+GPL-3.0-or-later.
+
+## Built on the registry template
+
+This repository is a fork of
+[`yapyap-app/registry-template`](https://github.com/yapyap-app/registry-template)
+— the base anyone can use to run their own lens registry. Improvements to
+the shared tooling (index builder, CI workflow) land in the template first
+and are merged here automatically.

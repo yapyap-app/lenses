@@ -1,13 +1,29 @@
 {
   "lenses": [
     {
-      "description": "An example lens that pulls the three most notable moments out of a recording. Delete this folder once you publish your own lens.",
-      "hash": "sha256:b5fb2ff76a79c0be33798a37b088fad782015d01ad691755693294eab0bad4e3",
-      "name": "Example: Highlights",
-      "path": "example-highlights",
-      "updatedAt": "2026-07-17T13:35:09+02:00",
-      "version": "1.0.0"
+      "description": "Extracts action items committed to in a meeting Transcript.",
+      "hash": "sha256:a92411a4f5c2065be0e1b84f6940f51e1a98c1b01cf426256832d1800c47c315",
+      "name": "Actions",
+      "path": "actions",
+      "updatedAt": "2026-07-10T00:00:00.000Z",
+      "version": "0.4.0"
+    },
+    {
+      "description": "Extracts Decisions committed to in a meeting Transcript.",
+      "hash": "sha256:f1e7b854c046ec86b895266bfcffb272c3e9a75bfbc54b5483bdf005c3fb5740",
+      "name": "Decisions",
+      "path": "decisions",
+      "updatedAt": "2026-07-10T00:00:00.000Z",
+      "version": "0.2.0"
+    },
+    {
+      "description": "Structured headline + framing + body summary of a recorded conversation.",
+      "hash": "sha256:0a3952e768b8761f4f9f96b594decd7072a8ddafb5613977452b145e95e4f764",
+      "name": "Summary",
+      "path": "summary",
+      "updatedAt": "2026-07-10T00:00:00.000Z",
+      "version": "0.2.0"
     }
   ],
-  "registryId": "change-me.lenses"
+  "registryId": "yapyap.official"
 }

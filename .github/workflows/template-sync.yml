@@ -1,0 +1,44 @@
+name: Sync from registry-template
+
+# Pull shared-tooling updates from the base template. Opens a PR rather
+# than pushing to main so a human still reviews what changed.
+on:
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Merge template/main and open a PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add template https://github.com/yapyap-app/registry-template.git
+          git fetch template main
+          if git merge-base --is-ancestor template/main HEAD; then
+            echo "already up to date with the template"
+            exit 0
+          fi
+          BRANCH="template-sync/$(git rev-parse --short template/main)"
+          git checkout -b "$BRANCH"
+          if git merge --no-edit template/main; then
+            git push -u origin "$BRANCH"
+            gh pr create \
+              --title "Sync shared tooling from registry-template" \
+              --body "Automated merge of yapyap-app/registry-template@$(git rev-parse --short template/main)." \
+              --base main --head "$BRANCH" || echo "PR already open"
+          else
+            echo "::error::merge conflict with template/main — merge manually"
+            exit 1
+          fi
