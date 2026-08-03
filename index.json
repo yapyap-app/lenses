@@ -9,6 +9,22 @@
       "version": "0.4.0"
     },
     {
+      "description": "Turns a client call or workshop into a shareable brief: outcomes, next steps, open items.",
+      "hash": "sha256:6be26a8850ab5c694d0631a12105230ca6598f105de3a441b5334d475f3fc557",
+      "name": "Brief",
+      "path": "brief",
+      "updatedAt": "2026-08-03T11:23:49.804Z",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Rebuilds the timeline of events described in a conversation — when, what, who, with sources.",
+      "hash": "sha256:b77b1012eacc10f31c4676be447ffbbe31d871d563ad888a903e7d80880b27ce",
+      "name": "Chronology",
+      "path": "chronology",
+      "updatedAt": "2026-08-03T11:23:49.832Z",
+      "version": "0.1.0"
+    },
+    {
       "description": "Extracts Decisions committed to in a meeting Transcript.",
       "hash": "sha256:f1e7b854c046ec86b895266bfcffb272c3e9a75bfbc54b5483bdf005c3fb5740",
       "name": "Decisions",
@@ -17,12 +33,36 @@
       "version": "0.2.0"
     },
     {
+      "description": "Pulls quote-ready, verbatim lines from a recording — speaker, context, and source per quote.",
+      "hash": "sha256:e6db98c0a8f729f45b9d65847a4302fe927c9042a05bf2b3307ec30a4c907185",
+      "name": "Quotes",
+      "path": "quotes",
+      "updatedAt": "2026-08-03T11:23:49.862Z",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Drafts podcast show notes: episode description, chapter outline, and pull quotes.",
+      "hash": "sha256:34a7d8d6f8db04c5cc275a57707e16bc0d2d9b6544923fe4472f443c6d44b3c3",
+      "name": "Show Notes",
+      "path": "show-notes",
+      "updatedAt": "2026-08-03T11:23:49.889Z",
+      "version": "0.1.0"
+    },
+    {
       "description": "Structured headline + framing + body summary of a recorded conversation.",
-      "hash": "sha256:0a3952e768b8761f4f9f96b594decd7072a8ddafb5613977452b145e95e4f764",
+      "hash": "sha256:09e73cab1ec3e2ef1c3541ba0602fc493733ecee7ecfb9264414747c8922cf95",
       "name": "Summary",
       "path": "summary",
-      "updatedAt": "2026-07-10T00:00:00.000Z",
-      "version": "0.2.0"
+      "updatedAt": "2026-07-17T14:21:12+02:00",
+      "version": "0.3.0"
+    },
+    {
+      "description": "Clusters a conversation into recurring themes, each backed by an exemplar quote.",
+      "hash": "sha256:eea2ee12bbdb502f10264ca53bbf8c1654dc39086c438a381417397164fb4535",
+      "name": "Themes",
+      "path": "themes",
+      "updatedAt": "2026-08-03T11:23:49.916Z",
+      "version": "0.1.0"
     }
   ],
   "registryId": "yapyap.official"
