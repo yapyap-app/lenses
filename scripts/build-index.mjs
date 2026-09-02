@@ -119,7 +119,7 @@ function encode(value, path, seen) {
   if (value === null)
     return "null";
   if (value === undefined) {
-    throw new CanonicalJsonError(`undefined at ${describePath(path)} — JSON has no representation for it`, path);
+    throw new CanonicalJsonError(`undefined at ${describePath(path)}: JSON has no representation for it`, path);
   }
   switch (typeof value) {
     case "boolean":
@@ -151,7 +151,7 @@ function encode(value, path, seen) {
     }
   }
   if (!isPlainObject(value)) {
-    throw new CanonicalJsonError(`non-plain object at ${describePath(path)} (${value.constructor?.name ?? "unknown"}) — Lenses travel as plain JSON`, path);
+    throw new CanonicalJsonError(`non-plain object at ${describePath(path)} (${value.constructor?.name ?? "unknown"}). Lenses travel as plain JSON`, path);
   }
   seen.add(value);
   try {
@@ -14818,7 +14818,7 @@ var renderHint = exports_external.enum([
   "jump-to",
   "score"
 ]);
-var tableColumn = exports_external.object({
+var recordField = exports_external.object({
   bind: exports_external.string(),
   label: exports_external.string().nullable(),
   render: renderHint.nullable()
@@ -14862,29 +14862,16 @@ var lensCatalog = defineCatalog(schema, {
         sections: exports_external.array(exports_external.string())
       }),
       slots: ["default"],
-      description: "Collapsible titled sections. `sections` is the ordered list of section titles; provide one child block per title, in the same order."
-    },
-    Tabs: {
-      props: exports_external.object({
-        tabs: exports_external.array(exports_external.string())
-      }),
-      slots: ["default"],
-      description: "Tabbed panels. `tabs` is the ordered list of tab labels; provide one child block per label, in the same order."
+      description: "Collapsible titled sections, stacked. `sections` is the ordered list of section titles; provide one child block per title, in the same order."
     },
     Collapsible: {
       props: exports_external.object({
         title: exports_external.string(),
-        open: exports_external.boolean().nullable()
+        open: exports_external.boolean().nullable(),
+        countOf: exports_external.array(exports_external.unknown()).nullable()
       }),
       slots: ["default"],
-      description: "A single show/hide region under a title. Use for long or secondary detail."
-    },
-    ScrollArea: {
-      props: exports_external.object({
-        maxHeight: exports_external.number().nullable()
-      }),
-      slots: ["default"],
-      description: "A fixed-height scrolling region. Wrap long content (e.g. a big table) to cap its height in pixels."
+      description: "A single show/hide region under a title. Use for long or secondary detail. Bind `countOf` to the same $state array the content renders to show its item count in the trigger."
     },
     Heading: {
       props: exports_external.object({
@@ -14926,13 +14913,13 @@ var lensCatalog = defineCatalog(schema, {
       }),
       description: "A list of label/value pairs (a definition list). Bind `items` to a $state array of { label, value }."
     },
-    Table: {
+    RecordList: {
       props: exports_external.object({
         rows: exports_external.array(exports_external.unknown()),
-        columns: exports_external.array(tableColumn).nullable(),
+        fields: exports_external.array(recordField).nullable(),
         emptyText: exports_external.string().nullable()
       }),
-      description: "An array of records as rows. Bind `rows` to a $state array; declare `columns` to pick and label fields."
+      description: "An array of records, each shown as its own stacked block of label/value lines (never a table: the View is one narrow column). Bind `rows` to a $state array; declare `fields` to pick, order and label the keys shown per record."
     },
     Checklist: {
       props: exports_external.object({
@@ -14944,7 +14931,7 @@ var lensCatalog = defineCatalog(schema, {
       props: exports_external.object({
         title: exports_external.string().nullable()
       }),
-      description: "Live, tickable action items this Lens created through its tools during the run. " + "The host supplies the rows and persists check/uncheck — do NOT bind $state. " + "Include at most once, and only when the Lens has the action-items capability."
+      description: "Live, tickable action items this Lens created through its tools during the run. " + "The host supplies the rows and persists check/uncheck. Do NOT bind $state. " + "Include at most once, and only when the Lens has the action-items capability."
     },
     QuoteList: {
       props: exports_external.object({
@@ -14994,19 +14981,6 @@ var lensCatalog = defineCatalog(schema, {
       }),
       description: "A simple chart over an array of records. `xKey`/`yKey` name the category and value fields. Bind `data` to a $state array."
     },
-    Breadcrumb: {
-      props: exports_external.object({
-        items: exports_external.array(exports_external.string())
-      }),
-      description: "A trail of labels (e.g. a path or hierarchy). Bind `items`."
-    },
-    Tooltip: {
-      props: exports_external.object({
-        text: exports_external.string(),
-        tip: exports_external.string()
-      }),
-      description: "Inline `text` that reveals `tip` on hover. Use sparingly for a gloss or definition."
-    },
     Empty: {
       props: exports_external.object({
         title: exports_external.string(),
@@ -15024,14 +14998,35 @@ var lensCatalog = defineCatalog(schema, {
         atSeconds: exports_external.number()
       }),
       description: "A small chip that jumps the recording playhead to a timestamp when clicked."
+    },
+    CitationChip: {
+      props: exports_external.object({
+        marker: exports_external.number().int().positive()
+      }),
+      description: "A superscript marker citing one of the answer's sources. `marker` is the [n] number the answer used; clicking it opens the quote, speaker and timestamp. Place it directly after the claim it supports. A marker the answer did not cite renders nothing, so only cite numbers you were given."
     }
+  },
+  actions: {}
+});
+var lens = lensCatalog.data.components;
+var chatCatalog = defineCatalog(schema, {
+  components: {
+    Group: lens.Group,
+    Card: lens.Card,
+    Heading: lens.Heading,
+    Text: lens.Text,
+    Callout: lens.Callout,
+    BulletList: lens.BulletList,
+    Checklist: lens.Checklist,
+    KeyValue: lens.KeyValue,
+    CitationChip: lens.CitationChip
   },
   actions: {}
 });
 
 // src/view-build.ts
-function isAcceptedByCatalog(spec) {
-  return lensCatalog.validate(spec).success;
+function isAcceptedByCatalog(spec, catalog = lensCatalog) {
+  return catalog.validate(spec).success;
 }
 var MAX_VIEW_ELEMENTS = 1000;
 var URL_PROP_KEYS = new Set([
@@ -15073,7 +15068,7 @@ function vetValue(key, value, path) {
   }
   if (value !== null && typeof value === "object") {
     if (isUrlKey) {
-      return `${path} must be a static https string — bindings are not allowed on URL props`;
+      return `${path} must be a static https string. Bindings are not allowed on URL props`;
     }
     for (const [k, v] of Object.entries(value)) {
       const reason = vetValue(k, v, `${path}.${k}`);
@@ -15184,7 +15179,8 @@ var LensPayloadSchema = exports_external.object({
   schema: exports_external.record(exports_external.string(), exports_external.unknown()),
   view: exports_external.unknown().nullable().optional(),
   inputRefs: exports_external.array(WireInputRefSchema).max(MAX_INPUT_REFS).default([]),
-  tools: exports_external.array(exports_external.string().min(1).max(MAX_SHORT)).max(MAX_TOOLS).optional()
+  tools: exports_external.array(exports_external.string().min(1).max(MAX_SHORT)).max(MAX_TOOLS).optional(),
+  preferredModel: exports_external.string().min(1).max(MAX_SHORT).optional()
 });
 var LensJsonSchema = exports_external.object({
   formatVersion: exports_external.literal(1),
@@ -15326,7 +15322,7 @@ async function main() {
     fail(`${parseErrors.length} lens.json file(s) failed to parse`);
   }
   if (files.length === 0) {
-    fail("no lenses/<path>/lens.json files found — add a lens first");
+    fail("no lenses/<path>/lens.json files found: add a lens first");
   }
   const result = await buildRegistryIndexFromFiles(registryId, files);
   if (!result.ok) {
@@ -15341,7 +15337,7 @@ async function main() {
       existing = readFileSync(indexPath, "utf8");
     } catch {}
     if (existing !== rendered) {
-      fail("index.json is stale — CI will rebuild it on push to the default branch");
+      fail("index.json is stale: CI will rebuild it on push to the default branch");
     }
     console.log(`✓ index.json up to date (${result.index.lenses.length} lens(es))`);
     return;
