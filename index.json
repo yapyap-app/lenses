@@ -5,7 +5,7 @@
       "hash": "sha256:9639b579e197669c00f25ad2ecb7c58e228254ebd40c191527d77f7ddc6c2f04",
       "name": "Actions",
       "path": "actions",
-      "updatedAt": "2026-07-17T14:21:12+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.5.0"
     },
     {
@@ -13,7 +13,7 @@
       "hash": "sha256:feb5bdac27094dd2823c703fd6a2ff5c2176cb3138f9c12ed3c7eaa2ea8fdce9",
       "name": "Brief",
       "path": "brief",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
     },
     {
@@ -21,7 +21,7 @@
       "hash": "sha256:851c0fead440c5cb7ef3659f7f546a700ea6cd7e7c97ddf71ddac40210b170a5",
       "name": "Chronology",
       "path": "chronology",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
     },
     {
@@ -29,7 +29,7 @@
       "hash": "sha256:b745fcf45b83f02230e1256cdcc1d9a9bac08ee983c656d1af3ae6c72b33dd2a",
       "name": "Decisions",
       "path": "decisions",
-      "updatedAt": "2026-07-17T14:21:12+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.3.0"
     },
     {
@@ -37,7 +37,7 @@
       "hash": "sha256:38193359389865ba4fce7a98df6caf5106b9c0d31a3ca8035bf60d74bd210deb",
       "name": "Quotes",
       "path": "quotes",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
     },
     {
@@ -45,23 +45,23 @@
       "hash": "sha256:9d46ef2ceb8ea474b90688e93e19cfc70fa80abb89c65c435d31ca1d126b0623",
       "name": "Show Notes",
       "path": "show-notes",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
     },
     {
       "description": "Structured headline + framing + body summary of a recorded conversation.",
-      "hash": "sha256:579668be78ffeb7894b7885008dbee274510d10c17ff7ad1343ede9b391a15c1",
+      "hash": "sha256:b0d1ab9e28fd89e3dc9ff6df29c4e3a456703b4cd0cf5aefa0f8b8a0488ed2cb",
       "name": "Summary",
       "path": "summary",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
-      "version": "0.3.0"
+      "updatedAt": "2026-09-02T20:06:07+02:00",
+      "version": "0.3.1"
     },
     {
       "description": "Clusters a conversation into recurring themes, each backed by an exemplar quote.",
       "hash": "sha256:994fadfb96fa86454bcaf3b0a49d5303f7f486912b8c888ab5d0980c401c5275",
       "name": "Themes",
       "path": "themes",
-      "updatedAt": "2026-08-03T17:35:34+02:00",
+      "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
     }
   ],
