@@ -42,8 +42,8 @@
     },
     {
       "description": "Drafts podcast show notes: episode description, chapter outline, and pull quotes.",
-      "hash": "sha256:9d46ef2ceb8ea474b90688e93e19cfc70fa80abb89c65c435d31ca1d126b0623",
-      "name": "Show Notes",
+      "hash": "sha256:ffe6c347f4e757d1bf7913f83eed7f396fa72229c79943d41625d89a0eb45996",
+      "name": "Show notes",
       "path": "show-notes",
       "updatedAt": "2026-09-02T20:06:07+02:00",
       "version": "0.2.0"
