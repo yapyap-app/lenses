@@ -33,6 +33,14 @@
       "version": "0.3.0"
     },
     {
+      "description": "Writes meeting minutes: who spoke, what happened, decisions, actions, and open questions.",
+      "hash": "sha256:6f32e303a7af060506b7712ec2322a0cb648480e438adf35d5e7f2bb08e87e0b",
+      "name": "Meeting minutes",
+      "path": "minutes",
+      "updatedAt": "2026-10-05T20:29:36.565Z",
+      "version": "0.1.0"
+    },
+    {
       "description": "Pulls quote-ready, verbatim lines from a recording. Speaker, context, and source per quote.",
       "hash": "sha256:38193359389865ba4fce7a98df6caf5106b9c0d31a3ca8035bf60d74bd210deb",
       "name": "Quotes",
